@@ -42,13 +42,7 @@ public class DaoCategoria {
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo getCategorias " + e.getMessage());
         } finally {
-            try {
-                con.close();
-                pstm.close();
-                rs.close();
-            } catch (SQLException e) {
-                System.out.println("Ocurrio un error al cerrar las conexiones " + e.getMessage());
-            }
+            ConnectionMySQL.closeConnections(con, pstm, rs);
         }
         return respuesta;
     }

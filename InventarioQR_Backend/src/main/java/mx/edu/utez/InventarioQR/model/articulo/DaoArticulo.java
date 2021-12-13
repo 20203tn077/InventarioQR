@@ -1,5 +1,6 @@
 package mx.edu.utez.InventarioQR.model.articulo;
 
+import javassist.compiler.ast.CondExpr;
 import mx.edu.utez.InventarioQR.connection.ConnectionMySQL;
 import mx.edu.utez.InventarioQR.model.Respuesta;
 import mx.edu.utez.InventarioQR.model.categoria.BeanCategoria;
@@ -51,13 +52,7 @@ public class DaoArticulo {
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo getArticulos " + e.getMessage());
         } finally {
-            try {
-                con.close();
-                pstm.close();
-                rs.close();
-            } catch (SQLException e) {
-                System.out.println("Ocurrio un error al cerrar las conexiones " + e.getMessage());
-            }
+            ConnectionMySQL.closeConnections(con, pstm, rs);
         }
         return respuesta;
     }
@@ -93,13 +88,7 @@ public class DaoArticulo {
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo getArticuloPorCodigo " + e.getMessage());
         } finally {
-            try {
-                con.close();
-                pstm.close();
-                rs.close();
-            } catch (SQLException e) {
-                System.out.println("Ocurrio un error al cerrar las conexiones " + e.getMessage());
-            }
+            ConnectionMySQL.closeConnections(con, pstm, rs);
         }
         return respuesta;
     }
@@ -137,13 +126,7 @@ public class DaoArticulo {
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo getArticulosPorCategoria " + e.getMessage());
         } finally {
-            try {
-                con.close();
-                pstm.close();
-                rs.close();
-            } catch (SQLException e) {
-                System.out.println("Ocurrio un error al cerrar las conexiones " + e.getMessage());
-            }
+            ConnectionMySQL.closeConnections(con, pstm, rs);
         }
         return respuesta;
     }
@@ -175,12 +158,7 @@ public class DaoArticulo {
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo insertarArticulo " + e.getMessage());
         } finally {
-            try {
-                con.close();
-                pstm.close();
-            } catch (SQLException e) {
-                System.out.println("Ocurrio un error al cerrar las conexiones " + e.getMessage());
-            }
+            ConnectionMySQL.closeConnections(con, pstm);
         }
         return respuesta;
     }
