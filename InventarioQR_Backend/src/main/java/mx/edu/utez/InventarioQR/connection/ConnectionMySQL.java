@@ -3,6 +3,7 @@ package mx.edu.utez.InventarioQR.connection;
 import java.sql.*;
 
 public class ConnectionMySQL {
+
     public static Connection getConnection() throws SQLException {
         String host = "127.0.0.1";
         String port = "3306";
@@ -11,7 +12,7 @@ public class ConnectionMySQL {
         String timezone = "UTC";
         String url = String.format("jdbc:mysql://%s:%s/%s?useSSL=%s&serverTimezone=%s", host, port, database, useSSL, timezone);
         DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-        return DriverManager.getConnection(url, "root", "");
+        return DriverManager.getConnection(url, "root", "root");
     }
 
     public static void closeConnections(Connection con, PreparedStatement cstm, ResultSet rs){
