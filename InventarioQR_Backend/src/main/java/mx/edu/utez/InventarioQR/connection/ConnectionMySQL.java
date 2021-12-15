@@ -10,12 +10,13 @@ public class ConnectionMySQL {
         String database = "InventarioQR";
         String useSSL = "false";
         String timezone = "UTC";
-        String url = String.format("jdbc:mysql://%s:%s/%s?useSSL=%s&serverTimezone=%s", host, port, database, useSSL, timezone);
+        String allowPublicKeyRetrieval="true";
+        String url = String.format("jdbc:mysql://%s:%s/%s?useSSL=%s&serverTimezone=%s&allowPublicKeyRetrieval=%s", host, port, database, useSSL, timezone, allowPublicKeyRetrieval);
         DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-        return DriverManager.getConnection(url, "root", "root");
+        return DriverManager.getConnection(url, "root", "");
     }
 
-    public static void closeConnections(Connection con, PreparedStatement cstm, ResultSet rs){
+    public static void closeConnections(Connection con, CallableStatement cstm, ResultSet rs){
         try{
             if(rs != null){ rs.close(); }
 
@@ -26,7 +27,7 @@ public class ConnectionMySQL {
         }catch(SQLException e){ }
     }
 
-    public static void closeConnections(Connection con, PreparedStatement cstm){
+    public static void closeConnections(Connection con, CallableStatement cstm){
         try{
             if(cstm != null){ cstm.close(); }
 

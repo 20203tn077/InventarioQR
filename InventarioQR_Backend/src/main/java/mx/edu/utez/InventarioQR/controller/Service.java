@@ -3,14 +3,11 @@ package mx.edu.utez.InventarioQR.controller;
 import mx.edu.utez.InventarioQR.model.Respuesta;
 import mx.edu.utez.InventarioQR.model.articulo.BeanArticulo;
 import mx.edu.utez.InventarioQR.model.articulo.DaoArticulo;
-import mx.edu.utez.InventarioQR.model.categoria.BeanCategoria;
 import mx.edu.utez.InventarioQR.model.categoria.DaoCategoria;
 
 import javax.jws.WebParam;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.List;
 
 @Path("/InventarioQR")
 public class Service {
@@ -54,7 +51,7 @@ public class Service {
     }
 
     @GET
-    @Path("/categoria/{id}")// http://localhost:8080/ventas/employee
+    @Path("/articulo/categoria/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Respuesta getArticuloPorCategoria(@PathParam("id") int id) {
         Respuesta respuesta = new Respuesta();

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DaoArticulo {
     private Connection con;
-    private CallableStatement pstm;
+    private CallableStatement cstm;
     private ResultSet rs;
 
     private final String CONSULTAR_ARTICULO = "CALL pdo_consultaPorCodigo(?,?)";
@@ -24,8 +24,8 @@ public class DaoArticulo {
         List<BeanArticulo> beanArticulos = new ArrayList<>();
         try {
             con = ConnectionMySQL.getConnection();
-            pstm = con.prepareCall(CONSULTAR_ARTICULOS);
-            rs = pstm.executeQuery();
+            cstm = con.prepareCall(CONSULTAR_ARTICULOS);
+            rs = cstm.executeQuery();
             if (rs.next()) {
                 while (rs.next()) {
                     BeanArticulo beanArticulo = new BeanArticulo();
@@ -52,7 +52,7 @@ public class DaoArticulo {
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo getArticulos " + e.getMessage());
         } finally {
-            ConnectionMySQL.closeConnections(con, pstm, rs);
+            ConnectionMySQL.closeConnections(con, cstm, rs);
         }
         return respuesta;
     }
@@ -62,11 +62,11 @@ public class DaoArticulo {
         BeanArticulo beanArticulo = new BeanArticulo();
         try {
             con = ConnectionMySQL.getConnection();
-            pstm = con.prepareCall(CONSULTAR_ARTICULO);
-            pstm.setLong("p_codigo", codigo);
-            pstm.registerOutParameter("p_error", Types.INTEGER);
-            rs = pstm.executeQuery();
-            int error = pstm.getInt("p_error");
+            cstm = con.prepareCall(CONSULTAR_ARTICULO);
+            cstm.setLong("p_codigo", codigo);
+            cstm.registerOutParameter("p_error", Types.INTEGER);
+            rs = cstm.executeQuery();
+            int error = cstm.getInt("p_error");
             if (error == 1) {
                 respuesta.respuesta = null;
                 respuesta.exitoso = false;
@@ -88,7 +88,7 @@ public class DaoArticulo {
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo getArticuloPorCodigo " + e.getMessage());
         } finally {
-            ConnectionMySQL.closeConnections(con, pstm, rs);
+            ConnectionMySQL.closeConnections(con, cstm, rs);
         }
         return respuesta;
     }
@@ -98,11 +98,11 @@ public class DaoArticulo {
         List<BeanArticulo> beanArticulos = new ArrayList<>();
         try {
             con = ConnectionMySQL.getConnection();
-            pstm = con.prepareCall(CONSULTAR_ARTICULO_CATEGORIA);
-            pstm.setInt("p_categoria", categoria);
-            pstm.registerOutParameter("p_errorCategoria", Types.INTEGER);
-            rs = pstm.executeQuery();
-            int errorCategoria = pstm.getInt("p_errorCategoria");
+            cstm = con.prepareCall(CONSULTAR_ARTICULO_CATEGORIA);
+            cstm.setInt("p_categoria", categoria);
+            cstm.registerOutParameter("p_errorCategoria", Types.INTEGER);
+            rs = cstm.executeQuery();
+            int errorCategoria = cstm.getInt("p_errorCategoria");
             if(errorCategoria == 0) {
                 while (rs.next()) {
                     BeanArticulo beanArticulo = new BeanArticulo();
@@ -126,7 +126,7 @@ public class DaoArticulo {
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo getArticulosPorCategoria " + e.getMessage());
         } finally {
-            ConnectionMySQL.closeConnections(con, pstm, rs);
+            ConnectionMySQL.closeConnections(con, cstm, rs);
         }
         return respuesta;
     }
@@ -135,19 +135,19 @@ public class DaoArticulo {
         Respuesta respuesta = new Respuesta();
         try {
             con = ConnectionMySQL.getConnection();
-            pstm = con.prepareCall(INSERTAR_ARTICULO);
+            cstm = con.prepareCall(INSERTAR_ARTICULO);
 
-            pstm.setLong("p_codigo", codigo);
-            pstm.setString("p_nombre", nombre);
-            pstm.setString("p_descripcion", descripcion);
-            pstm.setInt("p_categoria", categoria);
-            pstm.setInt("p_cantidad", cantidad);
+            cstm.setLong("p_codigo", codigo);
+            cstm.setString("p_nombre", nombre);
+            cstm.setString("p_descripcion", descripcion);
+            cstm.setInt("p_categoria", categoria);
+            cstm.setInt("p_cantidad", cantidad);
             //Parametro de salida (0 ó 1)
-            pstm.registerOutParameter("p_errorArticulo", Types.INTEGER);
-            pstm.executeUpdate();
+            cstm.registerOutParameter("p_errorArticulo", Types.INTEGER);
+            cstm.executeUpdate();
 
             //Obtenemos el valor del parámetro de salida
-            int entero = pstm.getInt(6);
+            int entero = cstm.getInt(6);
             if (entero == 0) {
                 respuesta.respuesta = "Registro ingresado exitosamente";
                 respuesta.exitoso = true;
@@ -158,7 +158,7 @@ public class DaoArticulo {
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo insertarArticulo " + e.getMessage());
         } finally {
-            ConnectionMySQL.closeConnections(con, pstm);
+            ConnectionMySQL.closeConnections(con, cstm);
         }
         return respuesta;
     }
