@@ -12,12 +12,11 @@ import javax.ws.rs.core.MediaType;
 @Path("/InventarioQR")
 public class Service {
     @GET
-    @Path("/articulo") // http://localhost:8080/ventas/employee
+    @Path("/articulo")
     @Produces(MediaType.APPLICATION_JSON)
     public Respuesta getArticulo() {
        Respuesta respuesta = new Respuesta();
         try {
-            System.out.println("Entro aqui");
             respuesta = new DaoArticulo().getArticulos();
         } catch (Exception e) {
             e.printStackTrace();
@@ -26,7 +25,7 @@ public class Service {
     }
 
     @GET
-    @Path("/articulo/{codigo}")// http://localhost:8080/ventas/employee
+    @Path("/articulo/{codigo}")
     @Produces(MediaType.APPLICATION_JSON)
     public Respuesta getArticuloPorCodigo(@PathParam("codigo") long  codigo) {
         Respuesta respuesta = new Respuesta();
@@ -38,7 +37,7 @@ public class Service {
         return respuesta;
     }
     @GET
-    @Path("/categoria")// http://localhost:8080/ventas/employee
+    @Path("/categoria")
     @Produces(MediaType.APPLICATION_JSON)
     public Respuesta getCategorias() {
         Respuesta respuesta = new Respuesta();
