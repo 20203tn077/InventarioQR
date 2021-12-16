@@ -63,13 +63,26 @@ public class Service {
     }
 
     @POST
-    @Path("/articulo")// http://localhost:8080/ventas/employee
+    @Path("/articulo")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Respuesta insertarArticulo(@WebParam BeanArticulo beanArticulo) {
         Respuesta respuesta = new Respuesta();
         try {
             respuesta = new DaoArticulo().insertarArticulo(beanArticulo.getCodigo(), beanArticulo.getNombre(), beanArticulo.getDescripcion(), beanArticulo.getCategoriaId().getId(), beanArticulo.getCantidad());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return respuesta;
+    }
+
+    @DELETE
+    @Path("/articulo/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Respuesta eliminarArticulo(@PathParam("id") long id) {
+        Respuesta respuesta = new Respuesta();
+        try {
+            respuesta = new DaoArticulo().eliminarArticulo(id);
         } catch (Exception e) {
             e.printStackTrace();
         }

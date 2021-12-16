@@ -18,6 +18,7 @@ public class DaoArticulo {
     private final String CONSULTAR_ARTICULOS = "CALL pdo_consulta(?)";
     private final String CONSULTAR_ARTICULO_CATEGORIA = "CALL pdo_consultaPorCategoria(?,?,?) ";
     private final String INSERTAR_ARTICULO = "CALL insertar_articulo(?, ?, ?, ?, ?, ?)";
+    private final String ELIMINAR_ARTICULO = "CALL eliminar_articulo(?,?)";
 
     public Respuesta getArticulos() {
         Respuesta respuesta = new Respuesta();
@@ -33,9 +34,9 @@ public class DaoArticulo {
                     BeanArticulo beanArticulo = new BeanArticulo();
                     BeanCategoria beanCategoria = new BeanCategoria();
                     beanArticulo.setCodigo(rs.getLong("codigo"));
-                    beanArticulo.setNombre(rs.getString("nombre"));
+                    beanArticulo.setNombre(rs.getString("nombreArticulo"));
                     beanArticulo.setDescripcion(rs.getString("descripcion"));
-                    beanCategoria.setNombre(rs.getString("nombre"));
+                    beanCategoria.setNombre(rs.getString("nombreCategoria"));
                     //Obtenemos los campos de Categoría y los guardamos en una variable
                     beanArticulo.setCategoriaId(beanCategoria);
                     //Una vez que ya tenemos todos los datos de categoría guardados en una variable esa es la que mandamos
@@ -43,17 +44,18 @@ public class DaoArticulo {
                     beanArticulos.add(beanArticulo);
                 }
                 respuesta.respuesta = beanArticulos;
+                respuesta.mensaje="Consulta exitosa";
                 respuesta.exitoso = true;
             } else {
-                respuesta.respuesta = "No hay articulos registrados";
+                respuesta.respuesta = null;
+                respuesta.mensaje = "No hay articulos registrados";
                 respuesta.exitoso = false;
 
             }
-
-
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo getArticulos " + e.getMessage());
-            respuesta.respuesta = "Se produjo un error al realizar la consulta";
+            respuesta.respuesta = null;
+            respuesta.mensaje = "Se produjo un error al realizar la consulta";
             respuesta.exitoso = false;
         } finally {
             ConnectionMySQL.closeConnections(con, cstm, rs);
@@ -72,25 +74,28 @@ public class DaoArticulo {
             rs = cstm.executeQuery();
             int error = cstm.getInt("p_error");
             if (error == 1) {
-                respuesta.respuesta = "Código inexistente";
+                respuesta.respuesta = null;
+                respuesta.mensaje = "Código inexistente";
                 respuesta.exitoso = false;
             } else {
                 if (rs.next()) {
                     BeanCategoria beanCategoria = new BeanCategoria();
                     beanArticulo.setCodigo(rs.getLong("codigo"));
-                    beanArticulo.setNombre(rs.getString("nombre"));
+                    beanArticulo.setNombre(rs.getString("nombreArticulo"));
                     beanArticulo.setDescripcion(rs.getString("descripcion"));
-                    beanCategoria.setNombre(rs.getString("nombre"));
+                    beanCategoria.setNombre(rs.getString("nombreCategoria"));
                     beanArticulo.setCategoriaId(beanCategoria);
                     beanArticulo.setCantidad(rs.getInt("cantidad"));
                     respuesta.respuesta = beanArticulo;
+                    respuesta.mensaje = "Consulta exitosa";
                     respuesta.exitoso = true;
                 }
             }
 
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo getArticuloPorCodigo " + e.getMessage());
-            respuesta.respuesta = "Se produjo un error al realizar la consulta";
+            respuesta.respuesta = null;
+            respuesta.mensaje = "Se produjo un error al realizar la consulta";
             respuesta.exitoso = false;
         } finally {
             ConnectionMySQL.closeConnections(con, cstm, rs);
@@ -116,27 +121,31 @@ public class DaoArticulo {
                         BeanArticulo beanArticulo = new BeanArticulo();
                         BeanCategoria beanCategoria = new BeanCategoria();
                         beanArticulo.setCodigo(rs.getLong("codigo"));
-                        beanArticulo.setNombre(rs.getString("nombre"));
+                        beanArticulo.setNombre(rs.getString("nombreArticulo"));
                         beanArticulo.setDescripcion(rs.getString("descripcion"));
-                        beanCategoria.setNombre(rs.getString("nombre"));
+                        beanCategoria.setNombre(rs.getString("nombreCategoria"));
                         beanArticulo.setCategoriaId(beanCategoria);
                         beanArticulo.setCantidad(rs.getInt("cantidad"));
                         beanArticulos.add(beanArticulo);
                     }
                     respuesta.respuesta = beanArticulos;
+                    respuesta.mensaje = "Consulta exitosa";
                     respuesta.exitoso = true;
                 }else{
-                    respuesta.respuesta = "No hay registros con ese tipo de categoria";
+                    respuesta.respuesta = null;
+                    respuesta.mensaje = "No hay registros con ese tipo de categoria";
                     respuesta.exitoso = false;
                 }
             }else{
-                respuesta.respuesta = "Categoría inexistente";
+                respuesta.respuesta = null;
+                respuesta.mensaje = "Categoría inexistente";
                 respuesta.exitoso = false;
             }
 
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo getArticulosPorCategoria " + e.getMessage());
-            respuesta.respuesta = "Se produjo un error al realizar la consulta";
+            respuesta.respuesta = null;
+            respuesta.mensaje = "Se produjo un error al realizar la consulta";
             respuesta.exitoso = false;
         } finally {
             ConnectionMySQL.closeConnections(con, cstm, rs);
@@ -162,17 +171,49 @@ public class DaoArticulo {
             //Obtenemos el valor del parámetro de salida
             int entero = cstm.getInt(6);
             if (entero == 0) {
-                respuesta.respuesta = "Registro ingresado exitosamente";
+                respuesta.respuesta = null;
+                respuesta.mensaje = "Registro ingresado exitosamente";
                 respuesta.exitoso = true;
             } else {
-                respuesta.respuesta = "El código ya se encuentra registrado";
+                respuesta.respuesta = null;
+                respuesta.mensaje = "El código ya se encuentra registrado";
                 respuesta.exitoso = false;
             }
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo insertarArticulo " + e.getMessage());
-            respuesta.respuesta = "Se produjo un error al realizar la inserción";
+            respuesta.respuesta = null;
+            respuesta.mensaje = "Se produjo un error al realizar la inserción";
             respuesta.exitoso = false;
         } finally {
+            ConnectionMySQL.closeConnections(con, cstm);
+        }
+        return respuesta;
+    }
+
+    public Respuesta eliminarArticulo(long codigo){
+        Respuesta respuesta = new Respuesta();
+        try{
+            con = ConnectionMySQL.getConnection();
+            cstm = con.prepareCall(ELIMINAR_ARTICULO);
+            cstm.setLong("p_codigo", codigo);
+            cstm.registerOutParameter("p_error", Types.INTEGER);
+            cstm.executeUpdate();
+            int error = cstm.getInt("p_error");
+            if(error == 1){
+                respuesta.respuesta = null;
+                respuesta.mensaje = "Artículo eliminado";
+                respuesta.exitoso=true;
+            }else {
+                respuesta.respuesta = null;
+                respuesta.mensaje = "Código inexistente";
+                respuesta.exitoso = false;
+            }
+        }catch(SQLException e){
+            System.out.println("Ocurrio un error en el metodo eliminarArticulo " + e.getMessage());
+            respuesta.respuesta = null;
+            respuesta.mensaje = "Se produjo un error al realizar la eliminacion";
+            respuesta.exitoso = false;
+        }finally {
             ConnectionMySQL.closeConnections(con, cstm);
         }
         return respuesta;

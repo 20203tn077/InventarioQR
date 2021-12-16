@@ -32,15 +32,18 @@ public class DaoCategoria {
                     beanCategorias.add(beanCategoria);
                 }
                 respuesta.respuesta = beanCategorias;
+                respuesta.mensaje = "Consulta exitosa";
                 respuesta.exitoso = true;
             }else{
-                respuesta.respuesta = "No hay categorias registradas";
+                respuesta.respuesta = null;
+                respuesta.mensaje = "No hay categorias registradas";
                 respuesta.exitoso = false;
             }
 
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo getCategorias " + e.getMessage());
-            respuesta.respuesta = "Se produjo un error al realizar la consulta";
+            respuesta.respuesta = null;
+            respuesta.mensaje = "Se produjo un error al realizar la consulta";
             respuesta.exitoso = false;
         } finally {
             ConnectionMySQL.closeConnections(con, cstm, rs);
