@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/txtCodigo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1234567890123"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre del artículo"
+            android:textColor="#673AB7"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="#6E5A93"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtCantidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="126 disponibles"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txtCategoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="En: categoria"
+            android:textSize="18sp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

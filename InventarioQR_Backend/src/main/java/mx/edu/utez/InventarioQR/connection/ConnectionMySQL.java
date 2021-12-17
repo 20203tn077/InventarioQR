@@ -13,7 +13,7 @@ public class ConnectionMySQL {
         String allowPublicKeyRetrieval="true";
         String url = String.format("jdbc:mysql://%s:%s/%s?useSSL=%s&serverTimezone=%s&allowPublicKeyRetrieval=%s", host, port, database, useSSL, timezone, allowPublicKeyRetrieval);
         DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-        return DriverManager.getConnection(url, "root", "");
+        return DriverManager.getConnection(url, "nekashii", "210129");
     }
 
     public static void closeConnections(Connection con, CallableStatement cstm, ResultSet rs){
