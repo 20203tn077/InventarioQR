@@ -7,7 +7,7 @@ CREATE TABLE categoria (
   id int NOT NULL AUTO_INCREMENT,
   nombre varchar(40) NOT NULL,
   PRIMARY KEY (id)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `articulo`
@@ -25,12 +25,13 @@ CREATE TABLE articulo (
   CONSTRAINT articulo_categoria_FK FOREIGN KEY (categoria_id) REFERENCES categoria (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `articulo`
+--
 
-
-
+INSERT INTO articulo VALUES (7746685421344,'PAPAS','Picosas',2,5);
 INSERT INTO articulo VALUES (7746685421345,'PAPAS','Picosas',1,5);
 INSERT INTO articulo VALUES (7854155744151,'Mascarilla','Mascarilla de yogurt',1,2);
-
 
 
 --
@@ -38,11 +39,12 @@ INSERT INTO articulo VALUES (7854155744151,'Mascarilla','Mascarilla de yogurt',1
 --
 
 INSERT INTO categoria VALUES (1,'Picosas');
+INSERT INTO categoria VALUES (2,'Departamentales');
 
 --
 -- Dumping routines for database 'inventarioqr'
 --
- 
+
 DELIMITER ;;
 CREATE DEFINER=root@localhost PROCEDURE eliminar_articulo(
 p_codigo BIGINT,
@@ -90,6 +92,7 @@ SELECT A.codigo, A.nombre AS nombreArticulo, A.descripcion, C.nombre AS nombreCa
 END ;;
 DELIMITER ;
 
+ 
 DELIMITER ;;
 CREATE DEFINER=root@localhost PROCEDURE pdo_consultaCategoria(
 OUT p_count INT)
@@ -112,7 +115,7 @@ SET p_count = 0;
 SELECT COUNT(*) INTO verificarCategoria FROM categoria WHERE id = p_categoria; 
 IF verificarCategoria = 1 THEN 
 SELECT COUNT(*) INTO p_count FROM articulo WHERE categoria_id = verificarCategoria;
-SELECT  A.codigo, A.nombre AS nombreArticulo, A.descripcion, C.nombre AS nombreCategoria, A.cantidad  FROM articulo A INNER JOIN categoria C ON A.categoria_id = C.id WHERE categoria_id = verificarCategoria;
+SELECT  A.codigo, A.nombre AS nombreArticulo, A.descripcion, C.nombre AS nombreCategoria, A.cantidad  FROM articulo A INNER JOIN categoria C ON A.categoria_id = C.id WHERE categoria_id = p_categoria;
 SET p_errorCategoria = 0;
 ELSE 
 SET p_errorCategoria = 1;
