@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ListaActivity"
-    android:padding="30dp">
+    android:paddingHorizontal="30dp"
+    android:paddingTop="10dp"
+    android:background="@color/light">
 
     <TextView
         android:layout_width="match_parent"

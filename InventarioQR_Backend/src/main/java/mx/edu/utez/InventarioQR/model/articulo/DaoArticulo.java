@@ -29,7 +29,6 @@ public class DaoArticulo {
             cstm.registerOutParameter("p_count", Types.INTEGER);
             rs = cstm.executeQuery();
             int count = cstm.getInt("p_count");
-            if (count != 0) {
                 while (rs.next()) {
                     BeanArticulo beanArticulo = new BeanArticulo();
                     BeanCategoria beanCategoria = new BeanCategoria();
@@ -46,12 +45,6 @@ public class DaoArticulo {
                 respuesta.respuesta = beanArticulos;
                 respuesta.mensaje="Consulta exitosa";
                 respuesta.exitoso = true;
-            } else {
-                respuesta.respuesta = null;
-                respuesta.mensaje = "No hay articulos registrados";
-                respuesta.exitoso = false;
-
-            }
         } catch (SQLException e) {
             System.out.println("Ocurrio un error en el metodo getArticulos " + e.getMessage());
             respuesta.respuesta = null;
@@ -116,7 +109,6 @@ public class DaoArticulo {
             int errorCategoria = cstm.getInt("p_errorCategoria");
             int count = cstm.getInt("p_count");
             if(errorCategoria == 0) {
-                if (count!=0){
                     while (rs.next()) {
                         BeanArticulo beanArticulo = new BeanArticulo();
                         BeanCategoria beanCategoria = new BeanCategoria();
@@ -131,11 +123,6 @@ public class DaoArticulo {
                     respuesta.respuesta = beanArticulos;
                     respuesta.mensaje = "Consulta exitosa";
                     respuesta.exitoso = true;
-                }else{
-                    respuesta.respuesta = null;
-                    respuesta.mensaje = "No hay registros con ese tipo de categoria";
-                    respuesta.exitoso = false;
-                }
             }else{
                 respuesta.respuesta = null;
                 respuesta.mensaje = "Categoría inexistente";

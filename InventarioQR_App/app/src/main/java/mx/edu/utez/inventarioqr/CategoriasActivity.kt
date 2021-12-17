@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,7 +28,7 @@ class CategoriasActivity : AppCompatActivity() {
         var categorias = emptyList<Categoria>()
         
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.0.10:8080/InventarioQR_Backend_war/InventarioQR/")
+            .baseUrl("http://192.168.0.42:8080/Integradora/InventarioQR/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -47,6 +49,7 @@ class CategoriasActivity : AppCompatActivity() {
 
                         adaptador.onItemClick = { categoria ->
                             val intent = Intent(this@CategoriasActivity, ListaActivity::class.java)
+                                .putExtra("origen", 2)
                                 .putExtra("categoria", categoria.id)
                             startActivity(intent)
                         }
@@ -70,5 +73,20 @@ class CategoriasActivity : AppCompatActivity() {
             }
 
         })
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_comun, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.mnuHome -> {
+                val intent = Intent(this@CategoriasActivity, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -11,50 +11,29 @@
     android:background="@color/light">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nuevo artículo"
-        android:textSize="24dp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Código:" />
-
-    <EditText
-        android:id="@+id/txtCodigo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="none"
-        android:layout_marginBottom="20dp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nombre:" />
-
-    <EditText
         android:id="@+id/txtNombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:layout_marginBottom="20dp" />
+        android:textSize="24dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txtCodigo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginBottom="20dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Descripción:" />
 
-    <EditText
+    <TextView
         android:id="@+id/txtDescripcion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
+        android:textSize="20dp"
         android:layout_marginBottom="20dp"/>
 
     <TextView
@@ -62,10 +41,11 @@
         android:layout_height="wrap_content"
         android:text="Categoría:" />
 
-    <Spinner
-        android:id="@+id/spCategoria"
+    <TextView
+        android:id="@+id/txtCategoria"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
         android:layout_marginBottom="20dp"/>
 
     <TextView
@@ -73,17 +53,16 @@
         android:layout_height="wrap_content"
         android:text="Cantidad:" />
 
-    <EditText
+    <TextView
         android:id="@+id/txtCantidad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
+        android:textSize="20dp"
         android:layout_marginBottom="20dp"/>
 
     <Button
-        android:id="@+id/btnRegistrar"
+        android:id="@+id/btnEliminar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Registrar" />
+        android:text="Eliminar" />
 </LinearLayout>

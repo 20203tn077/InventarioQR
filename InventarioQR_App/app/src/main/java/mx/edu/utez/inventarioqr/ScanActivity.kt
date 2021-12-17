@@ -67,15 +67,21 @@ class ScanActivity : AppCompatActivity() {
                     it.setAnalyzer(cameraExecutor, BarcodeAnalyzer { barcode ->
                         if (processingBarcode.compareAndSet(false, true)) {
                             val destino = intent.getIntExtra("destino", 0)
-                            val intent = Intent(this@ScanActivity, when (destino) {
-                                1 -> ListaActivity::class.java
-                                2 -> RegistroActivity::class.java
-                                else -> MainActivity::class.java
-                            })
-                            intent.apply {
-                                //flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                putExtra("codigo", barcode.toLong())
+                            var intent: Intent
+                            when (destino) {
+                                1 -> {
+                                    intent = Intent(this@ScanActivity, ArticuloActivity::class.java)
+                                        .putExtra("origen", 2)
+                                }
+                                2 -> {
+                                    intent = Intent(this@ScanActivity, RegistroActivity::class.java)
+                                }
+                                else -> {
+                                    intent = Intent(this@ScanActivity, MainActivity::class.java)
+                                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                }
                             }
+                            intent.putExtra("codigo", barcode.toLong())
                             startActivity(intent)
                         }
                     })

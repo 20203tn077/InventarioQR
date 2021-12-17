@@ -11,11 +11,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <ImageView
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginBottom="40dp"
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_scan" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Enfoca el código de barras del artículo"
         android:textColor="@color/white"
+        android:textSize="18sp"
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="60dp"/>
 </FrameLayout>
